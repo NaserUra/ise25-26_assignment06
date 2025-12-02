@@ -87,36 +87,6 @@ public class PosController {
     }
 
     @Operation(
-            summary = "Get POS by name.",
-            responses = {
-                    @ApiResponse(
-                            responseCode = "200",
-                            content = @Content(
-                                    mediaType = "application/json",
-                                    schema = @Schema(implementation = PosDto.class)
-                            ),
-                            description = "The POS with the provided name as a JSON object."
-                    ),
-                    @ApiResponse(
-                            responseCode = "404",
-                            content = @Content(
-                                    mediaType = "application/json",
-                                    schema = @Schema(implementation = ErrorResponse.class)
-                            ),
-                            description = "No POS with the provided name could be found."
-                    )
-            }
-    )
-    @GetMapping("/filter")
-    public ResponseEntity<PosDto> filter(
-            @RequestParam("name") String name) {
-
-        return ResponseEntity.ok(
-                posDtoMapper.fromDomain(posService.getByName(name))
-        );
-    }
-
-    @Operation(
             summary = "Create a new POS.",
             responses = {
                     @ApiResponse(
@@ -145,6 +115,36 @@ public class PosController {
         return ResponseEntity
                 .created(getLocation(created.id()))
                 .body(created);
+    }
+
+    @Operation(
+            summary = "Get POS by name.",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            content = @Content(
+                                    mediaType = "application/json",
+                                    schema = @Schema(implementation = PosDto.class)
+                            ),
+                            description = "The POS with the provided name as a JSON object."
+                    ),
+                    @ApiResponse(
+                            responseCode = "404",
+                            content = @Content(
+                                    mediaType = "application/json",
+                                    schema = @Schema(implementation = ErrorResponse.class)
+                            ),
+                            description = "No POS with the provided name could be found."
+                    )
+            }
+    )
+    @GetMapping("/filter")
+    public ResponseEntity<PosDto> filter(
+            @RequestParam("name") String name) {
+
+        return ResponseEntity.ok(
+                posDtoMapper.fromDomain(posService.getByName(name))
+        );
     }
 
     @Operation(
